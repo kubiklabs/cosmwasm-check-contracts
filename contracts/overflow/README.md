@@ -1,4 +1,4 @@
-# Secret Contracts Counter Example
+# CosmWasm Contracts Counter Example
 
 This template contains simple counter contracts.
 The contract is created with a parameter for the initial count and allows subsequent incrementing.
@@ -11,19 +11,19 @@ The contract is created with a parameter for the initial count and allows subseq
 # Compiling contracts
 
 Use this command to compile your contracts: 
-`wasmkit compile`
+`junokit compile`
 
 # Run script
 
-`wasmkit run scripts/sample-script.js`
+`junokit run scripts/sample-script.js`
 
 # Deploying contracts
 
 In `scripts` folder:
 
 First of all you need to create an instance of your contract using contract name.
-```js
-const contract = new Contract('sample-project', runtimeEnv);
+```ts
+const contract = new Contract('sample-project');
 
 // To deploy your contract
 const deploy_response = await contract.deploy(account);
@@ -36,12 +36,12 @@ Note: You can check out your contract information in `deploy_response`.
 
 # Interact with contracts
 
-`wasmkit` will load functions using schema, you can call contract functions using `contract.tx`(to execute transactions) and `contract.query`(to query from contract)
+`junokit` will load functions using schema, you can call contract functions using `contract.tx`(to execute transactions) and `contract.query`(to query from contract)
 ```js
 // To interact with your contract
 // Execute contract function
-await contract.tx.increment(account);
+await contract.increment(account);
 
 // View count in contract
-await contract.query.get_count();
+await contract.get_count();
 ```
