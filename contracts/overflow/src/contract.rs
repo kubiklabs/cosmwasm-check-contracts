@@ -4,7 +4,7 @@ use cosmwasm_std::{
 };
 
 use crate::error::ContractError;
-use crate::msg::{ ExecuteMsg, InstantiateMsg, QueryMsg, CountResponse};
+use crate::msg::{ ExecuteMsg, InstantiateMsg, QueryMsg, CountResponse, SumResponse};
 use crate::state::{Constants, CONSTANTS};
 
 #[entry_point]
@@ -16,7 +16,8 @@ pub fn instantiate(
 ) -> Result<Response, ContractError> {
     let state = Constants {
         count: msg.count,
-        owner: _info.sender.to_string()
+        owner: _info.sender.to_string(),
+        sum: msg.sum,
     };
     CONSTANTS.save(deps.storage,&state)?;
     Ok(Response::new()
@@ -33,6 +34,7 @@ pub fn execute(
 ) -> Result<Response, ContractError> {
     match msg {
         ExecuteMsg::Increment {} => try_increment(deps, env, info),
+        ExecuteMsg::Add { one, two } => try_add(deps, env, info, one, two),
         ExecuteMsg::Reset { count } => try_reset(deps, env, info, count),
     }
 }
@@ -40,7 +42,8 @@ pub fn execute(
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
-           QueryMsg::GetCount {} => query_count(deps),
+        QueryMsg::GetSum {} => query_sum(deps),
+        QueryMsg::GetCount {} => query_count(deps),
     }
 }
 
@@ -54,6 +57,22 @@ fn try_increment(
     CONSTANTS.save(deps.storage,&constant)?;
     Ok(Response::new()
         .add_attribute("action", "increament"))
+}
+
+fn try_add(
+    deps: DepsMut,
+    _env: Env,
+    _info: MessageInfo,
+    one: i32,
+    two: i32,
+) -> Result<Response, ContractError> {
+    let mut constant = CONSTANTS.load(deps.storage)?;
+
+    let sum = one + two;
+    constant.sum = sum;
+    CONSTANTS.save(deps.storage,&constant)?;
+    Ok(Response::new()
+        .add_attribute("action", "add"))
 }
 
 fn try_reset(
@@ -77,4 +96,9 @@ fn try_reset(
 pub fn query_count(_deps: Deps) -> StdResult<Binary> {
     let constant = CONSTANTS.load(_deps.storage)?;
     to_binary(&(CountResponse {count : constant.count}))
+}
+
+pub fn query_sum(_deps: Deps) -> StdResult<Binary> {
+    let constant = CONSTANTS.load(_deps.storage)?;
+    to_binary(&(SumResponse {sum : constant.sum}))
 }

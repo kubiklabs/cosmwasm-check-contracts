@@ -17,6 +17,32 @@
     {
       "type": "object",
       "required": [
+        "add"
+      ],
+      "properties": {
+        "add": {
+          "type": "object",
+          "required": [
+            "one",
+            "two"
+          ],
+          "properties": {
+            "one": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "two": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
         "reset"
       ],
       "properties": {

@@ -13,6 +13,18 @@
         }
       },
       "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "get_sum"
+      ],
+      "properties": {
+        "get_sum": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
     }
   ]
 }
