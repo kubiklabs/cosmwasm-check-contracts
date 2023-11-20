@@ -1,5 +1,8 @@
 [workspace]
-members = ["contracts/overflow/"]
+members = [
+    "contracts/overflow/",
+    "contracts/access-control/",
+]
 
 [profile.release]
 opt-level = 3

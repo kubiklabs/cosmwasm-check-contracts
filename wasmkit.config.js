@@ -18,6 +18,11 @@ const neutron_testnet_accounts = [
     address: 'neutron1jtdje5vq42sknl22r4wu9sahryu5wcrdqsccjh',
     mnemonic: 'category fine rapid trumpet dune early wish under nothing dance property wreck'
   },
+  {
+    name: 'account_1',
+    address: 'neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2',
+    mnemonic: 'banner spread envelope side kite person disagree path silver will brother under couch edit food venture squirrel civil budget number acquire point work mass'
+  },
 ];
 
 const archway_testnet_accounts = [
